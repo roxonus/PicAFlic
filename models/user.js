@@ -1,38 +1,29 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
-    firstName: {
+const userSchema = new mongoose.Schema({
+    name: {
         type: String,
-        default: '',
-        required: true
-    },
-    lastName: {
-        type: String,
-        default: '',
-        required: true
+        required: true,
+        min: 3,
+        max: 255
     },
     email: {
         type: String,
-        default: '',
-        required: true
-    },
+        required: true,
+        min: 6,
+        max: 255
+    }, 
     password: {
         type: String,
-        default: '',
-        required: true
+        required: true,
+        max:1024,
+        min: 6
     },
-    isDeleted: {
-        type: Boolean,
-        default: false
+    date: {
+        type: Date,
+        default: Date.now()
     }
 });
 
-UserSchema.methods.generateHash = function(password){
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-UserSchema.methods.validPassword = function(password){
-    return bcrypt.compareSync(password, this.password);
-};
 
-
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', userSchema, 'picaflicDB')
