@@ -1,73 +1,92 @@
-// import React, { Component } from 'react';
-// import './App.css';
-// import LoginScreen from './Loginscreen';
-// class App extends Component {
-//   constructor(props){
-//     super(props);
-//     this.state={
-//       loginPage:[],
-//       uploadScreen:[]
-//     }
-//   }
-//   componentWillMount(){
-//     var loginPage =[];
-//     loginPage.push(<LoginScreen appContext={this} key={"login-screen"}/>);
-//     this.setState({
-//                   loginPage:loginPage
-//                     })
-//   }
-//   render() {
-//     return (
-//       <div className="App">
-//         {this.state.loginPage}
-//         {this.state.uploadScreen}
-//       </div>
-//     );
-//   }
-// }
-
-
-// export default App;
-
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import fire from './fire';
+import Login from './Login';
+import Hero from './Hero';
 import './App.css';
-import Header from './components/Header/Header';
-import LoginForm from './components/LoginForm/LoginForm';
-import RegistrationForm from './components/RegistrationForm/RegistrationForm';
-import Home from './components/Home/Home';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
-import AlertComponent from './components/AlertComponent/AlertComponent';  
-function App() {
-  const [title, updateTitle] = useState(null);
-  const [errorMessage, updateErrorMessage] = useState(null);
+
+const App = () => {
+  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [hasAccount, setHasAccount] = useState(false);
+
+  const clearInputs = () => {
+    setEmail('');
+    setPassword('');
+  }
+
+  const clearErrors = () => {
+    setEmailError('');
+    setPasswordError('');
+  }
+
+  const handleLogin = () => {
+    clearErrors();
+    fire
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(err => {
+        switch (err.code) {
+          case 'auth/invalid-email':
+          case 'auth/user-disabled':
+          case 'auth/user-not-found':
+            setEmailError(err.message);
+            break;
+          case 'auth/wrong-password':
+            setPasswordError(err.message);
+            break;
+        }
+      })
+  };
+
+  const handleSignup = () => {
+    clearErrors();
+    fire
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch(err => {
+        switch (err.code) {
+          case 'auth/email-already-in-use':
+          case 'auth/invalid-email':
+            setEmailError(err.message);
+            break;
+          case 'auth/weak-password':
+            setPasswordError(err.message);
+            break;
+        }
+      });
+  };
+
+  const handleLogout = () => {
+    fire.auth().signOut();
+  };
+
+  const authListener = () => {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        clearInputs();
+        setUser(user);
+      } else {
+        setUser('');
+      }
+    });
+  };
+
+  useEffect(() => {
+    authListener();
+  }, []);
+
   return (
-    <Router>
-    <div className="App">
-      <Header title={title}/>
-        <div className="container d-flex align-items-center flex-column">
-          <Switch>
-            <Route path="/" exact={true}>
-              <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/>
-            </Route>
-            <Route path="/register">
-              <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/>
-            </Route>
-            <Route path="/login">
-              <LoginForm showError={updateErrorMessage} updateTitle={updateTitle}/>
-            </Route>
-            <Route path="/home">
-              <Home/>
-            </Route>
-          </Switch>
-          <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>
-        </div>
+    <div className='App'>
+      {user ? (
+        <Hero handleLogout={handleLogout} />
+      ) : (
+        <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleLogin={handleLogin} handleSignup={handleSignup} hasAccount={hasAccount} setHasAccount={setHasAccount} emailError={emailError} passwordError={passwordError} />
+      )}
     </div>
-    </Router>
   );
-}
+};
 
 export default App;
