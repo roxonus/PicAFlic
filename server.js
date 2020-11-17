@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const PORT = process.env.PORT || 3001;
 const app = express();
 const axios = require('axios');
+const firebase = require('firebase');
 
 
 const authRoute = require('./routes/auth');
