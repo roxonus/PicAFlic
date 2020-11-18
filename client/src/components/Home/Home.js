@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import Search from '../Search/Search'
 import Results from '../Results'
+import fire from '../../fire';
+// import Hero from '../../Hero'
 
 
 function Home(props) {
@@ -34,17 +36,46 @@ function Home(props) {
 
         console.log(state.s);
     }
+    //using Hero.js here 
+
+    const handleLogout = () => {
+        fire.auth().signOut();
+      };
+    // const handleLogout = (e) => {
+    //     let s = e.target.value;
+
+    //     setState(prevState => {
+    //         return { ...prevState, s: s }
+    //     });
+
+    //     console.log(state.s);
+    // }
+
+    
+
     return(
+        
         <div className="mt-2">
-           <header>
-               <h1>PicAFlic</h1>
-           </header>
-           <main>
+        
+           <section className='hero'>
+            <nav>
+                <h2>
+                    Welcome to PicAFlic
+                </h2>
+                <button onClick={handleLogout}>
+                    Logout
+                </button>
+            </nav>
                <Search handleInput={handleInput} search={search} />
                <Results results={state.results} />
-           </main>
+               </section>
+         
         </div>
     )
 }
 
+
+
+
 export default Home;
+

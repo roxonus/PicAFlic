@@ -3,6 +3,7 @@ import fire from './fire';
 import Login from './Login';
 import Hero from './Hero';
 import './App.css';
+import Home from '../src/components/Home/Home'
 
 const App = () => {
   const [user, setUser] = useState('');
@@ -81,7 +82,8 @@ const App = () => {
   return (
     <div className='App'>
       {user ? (
-        <Hero handleLogout={handleLogout} />
+        <Home handleLogout={handleLogout} />
+       
       ) : (
         <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleLogin={handleLogin} handleSignup={handleSignup} hasAccount={hasAccount} setHasAccount={setHasAccount} emailError={emailError} passwordError={passwordError} />
       )}
@@ -90,3 +92,5 @@ const App = () => {
 };
 
 export default App;
+
+
