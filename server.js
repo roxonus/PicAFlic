@@ -19,8 +19,14 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
- 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost27017/picaflicDB', { useNewUrlParser: true }); 
+
+const MONGODB_URI = 'mongodb+srv://bowerpowewr85:DeadLast@fitnesscluster.cohae.mongodb.net/picaflicDB?retryWrites=true&w=majority'
+
+mongoose.connect(MONGODB_URI || 'mongodb://localhost/picaflicDB', { useNewUrlParser: true, useUnifiedTopography: true }); 
+
+mongoose.connection.on('connected', () => {
+  console.log('Your shit is good to go. Now go shit.')
+});
 // (err) => {
 //   if(err) {
 //     console.error(err);
