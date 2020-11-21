@@ -9,8 +9,8 @@ const axios = require('axios');
 const firebase = require('firebase');
 
 
-const authRoute = require('./routes/auth');
-const postRoute = require('./routes/post');
+// const authRoute = require('./routes/auth');
+// const postRoute = require('./routes/post');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
