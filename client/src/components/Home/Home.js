@@ -7,13 +7,13 @@ import Popup from '../Popup'
 // import Hero from '../../Hero'
 
 
-function Home(props) {
+function Home() {
     const [state, setState] = useState({
         s: "",
         results: [],
         selected: {}
     });
-    const apiurl = "http://www.omdbapi.com/?i=tt3896198&apikey=471abaae";
+    const apiurl = "http://www.omdbapi.com/?&apikey=471abaae";
     //data.data.search
 
     const search = (e) => {
@@ -45,10 +45,10 @@ function Home(props) {
 
     const openPopup = id => {
         axios(apiurl + '&i=' + id).then(({ data }) => {
-          let result = data;
-          console.log(result);
+          let results = data;
+          console.log(results);
           setState(prevState => {
-            return { ...prevState, selected: result }
+            return { ...prevState, selected: results }
           });
         });
       }
