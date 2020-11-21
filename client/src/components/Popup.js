@@ -9,6 +9,8 @@ function Popup({ selected, closePopup }) {
 					<img src={selected.Poster} />
 					<p>{selected.Plot}</p>
 				</div>
+				{/* Add the route to DB to save button below in onClick  */}
+				<button className='save'>Save to Your Library</button>
 				<button className='close' onClick={closePopup}>Close</button>
 			</div>
 		</section>
