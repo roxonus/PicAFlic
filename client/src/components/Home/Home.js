@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios'
-import Search from '../Search/Search'
-import Results from '../Results'
+import axios from 'axios';
+import Search from '../Search/Search';
+import Results from '../Results';
 import fire from '../../fire';
-import Popup from '../Popup'
+import Popup from '../Popup';
+
 // import Hero from '../../Hero'
 
 
@@ -58,6 +59,12 @@ function Home() {
           return { ...prevState, selected: {} }
         });
       }
+    //   For saving the users choice to library
+    // const saveLibrary = () => {
+    //     setState(prevState => {
+    //       return { ...prevState, selected: {} }
+    //     });
+    //   }
 
     
 
@@ -70,13 +77,16 @@ function Home() {
                 <h2>
                     Welcome to PicAFlic
                 </h2>
+                <button onClick={'../Library/Library'}>
+                    Library
+                </button>
                 <button onClick={handleLogout}>
                     Logout
                 </button>
             </nav>
                <Search handleInput={handleInput} search={search} />
                <Results results={state.results} openPopup={openPopup} />
-
+                {/* add in here a savelibrary={saveLibrary} */}
                {(typeof state.selected.Title != 'undefined') ? <Popup selected={state.selected} closePopup={closePopup} /> : false}
                </section>
          
