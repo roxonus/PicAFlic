@@ -13,7 +13,7 @@ const movieSchema = new mongoose.Schema({
         min: 4,
         max: 4
     },
-    RunTime: {
+    Runtime: {
         type: String,
         required: true,
         min: 3,

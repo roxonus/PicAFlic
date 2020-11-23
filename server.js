@@ -17,7 +17,7 @@ app.use(express.json());
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static("client/build/"));
 }
 
 const MONGODB_URI = 'mongodb+srv://bowerpowewr85:DeadLast@fitnesscluster.cohae.mongodb.net/picaflicDB?retryWrites=true&w=majority'
