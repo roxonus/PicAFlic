@@ -3,6 +3,9 @@ import Login from './Login';
 import './App.css';
 import fire from './fire';
 import Home from '../src/components/Home/Home'
+import axios from 'axios';
+import firebase from 'firebase'
+
 
 const App = () => {
   const [user, setUser] = useState('');
@@ -55,9 +58,22 @@ const App = () => {
           case 'auth/weak-password':
             setPasswordError(err.message);
             break;
-        }
-      });
+        } 
+      }).then (
+        axios.post('api/user', { email:'', password:'' })
+           .then(res => {
+             console.log(res);
+             console.log(res.data);
+           })
+      )
   };
+  function writeUserData(userId, email, password) { 
+    console.log(email, "Here") 
+    firebase.database().ref('users/' + userId).set({
+          email: email,
+          password: password, 
+        });
+        }
 
   const handleLogout = () => {
     fire.auth().signOut();

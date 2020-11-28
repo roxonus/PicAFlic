@@ -1,4 +1,5 @@
 import React from 'react'
+import FaStar from '../components/Star/Stars'
 
 function Popup({ selected, closePopup }) {
 	return (
@@ -8,13 +9,14 @@ function Popup({ selected, closePopup }) {
 				<p className='rating'>Rating: {selected.Rated}</p>
 				<div className='plot'>
 					<img src={selected.Poster} />
-					<p>{selected.Plot}</p>
+					<p>Plot:{selected.Plot}</p>
 					<p>Director:{selected.Director}</p>
 					<p>Actors: {selected.Actors}</p>
 					<p>Runtime:{selected.Runtime}</p>
+					<p>Rate This Movie:<FaStar /></p>
 				</div>
 				{/* Add the route to DB to save button below in onClick  */}
-				<button className='save' onClick={handleClick}>Save to Your Library</button>
+				<button className='save'>Save to Your Library</button>
 				<button className='close' onClick={closePopup}>Close</button>
 			</div>
 		</section>
