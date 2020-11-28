@@ -6,9 +6,10 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const axios = require('axios');
-const firebase = require('firebase');
+const firebase = require('firebase/app');
 
-
+require('firebase/auth');
+require('firebase/firestore');
 // const authRoute = require('./routes/auth');
 // const postRoute = require('./routes/post');
 
