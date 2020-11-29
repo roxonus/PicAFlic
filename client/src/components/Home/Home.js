@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Search from '../Search/Search';
 import Results from '../Results';
-import fire from '../../fire';
+import fire from '../../firebase';
 import Popup from '../Popup';
 
 // import Hero from '../../Hero'

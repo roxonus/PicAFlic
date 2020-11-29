@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import './App.css';
-import fire from './fire';
 import Home from '../src/components/Home/Home'
 import axios from 'axios';
-import firebase from 'firebase'
+import firebase from 'firebase';
+import fire from './firebase'
+import config from './firebase';
+import UserInput from './components/UserInput'
+
+
 
 
 const App = () => {
@@ -14,6 +18,18 @@ const App = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
+  const [newUserEmail, setNewUserEmail] = React.useState();
+  const [newUserPassword, setNewUserPassword] = React.useState();
+
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const db = firebase.firestore();
+      const data = await db.collection('users').get();
+      setUser(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    };
+    fetchData();
+  }, []);
 
   const clearInputs = () => {
     setEmail('');
@@ -30,6 +46,7 @@ const App = () => {
     fire
       .auth()
       .signInWithEmailAndPassword(email, password)
+      
       .catch(err => {
         switch (err.code) {
           case 'auth/invalid-email':
@@ -42,6 +59,8 @@ const App = () => {
             break;
         }
       })
+      const db = firebase.firestore();
+      db.collection('user').doc().set({id: user.id , email: user.email, password: user.password})
   };
 
   const handleSignup = () => {
@@ -59,13 +78,8 @@ const App = () => {
             setPasswordError(err.message);
             break;
         } 
-      }).then (
-        axios.post('api/user', { email:'', password:'' })
-           .then(res => {
-             console.log(res);
-             console.log(res.data);
-           })
-      )
+      })
+        
   };
   function writeUserData(userId, email, password) { 
     console.log(email, "Here") 
@@ -80,7 +94,7 @@ const App = () => {
   };
 
   const authListener = () => {
-    fire.auth().onAuthStateChanged(user => {
+  fire.auth().onAuthStateChanged(user => {
       if (user) {
         clearInputs();
         setUser(user);
