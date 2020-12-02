@@ -4,9 +4,10 @@ import './App.css';
 import Home from '../src/components/Home/Home'
 import axios from 'axios';
 import firebase from 'firebase';
-import fire from './firebase'
-import config from './firebase';
+// import Firebase from './firebase'
+// import config from './firebase';
 import UserInput from './components/UserInput'
+// require('firebase/auth')
 
 
 
@@ -18,18 +19,6 @@ const App = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
-  const [newUserEmail, setNewUserEmail] = React.useState();
-  const [newUserPassword, setNewUserPassword] = React.useState();
-
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const db = firebase.firestore();
-      const data = await db.collection('users').get();
-      setUser(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-    };
-    fetchData();
-  }, []);
 
   const clearInputs = () => {
     setEmail('');
@@ -43,7 +32,7 @@ const App = () => {
 
   const handleLogin = () => {
     clearErrors();
-    fire
+    firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       
@@ -59,13 +48,11 @@ const App = () => {
             break;
         }
       })
-      const db = firebase.firestore();
-      db.collection('user').doc().set({id: user.id , email: user.email, password: user.password})
   };
 
   const handleSignup = () => {
     clearErrors();
-    fire
+    firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .catch(err => {
@@ -90,15 +77,15 @@ const App = () => {
         }
 
   const handleLogout = () => {
-    fire.auth().signOut();
+    firebase.auth().signOut();
   };
 
   const authListener = () => {
-  fire.auth().onAuthStateChanged(user => {
+  firebase.auth().onAuthStateChanged(user => {
       if (user) {
         clearInputs();
         setUser(user);
-      } else {
+     } else {
         setUser('');
       }
     });
@@ -107,6 +94,7 @@ const App = () => {
   useEffect(() => {
     authListener();
   }, []);
+
 
   return (
     <div className='App'>

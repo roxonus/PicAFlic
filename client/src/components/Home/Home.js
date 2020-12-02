@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Search from '../Search/Search';
 import Results from '../Results';
-import fire from '../../firebase';
+import config from '../../firebase';
 import Popup from '../Popup';
+import firebase from 'firebase';
 
 // import Hero from '../../Hero'
 
@@ -41,7 +42,7 @@ function Home() {
     
 
     const handleLogout = () => {
-        fire.auth().signOut();
+        firebase.auth().signOut();
       };
 
     const openPopup = id => {
@@ -59,6 +60,19 @@ function Home() {
           return { ...prevState, selected: {} }
         });
       }
+
+    // async function addDocument(db) {
+    //     const res = await db.collection('movies').add({
+    //         Title: Popup.Title,
+    //         Year: Popup.Year,
+    //         Rated: Popup.Rated,
+    //         Poster: Popup.Poster,
+    //         Plot: Popup.Plot,
+    //         Director: Popup.Director,
+    //         Actors: Popup.Actors,
+    //         Runtime: Popup.Runtime
+    //     });
+    // }
 
     
     //   For saving the users choice to library
