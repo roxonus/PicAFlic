@@ -1,7 +1,17 @@
 import React from 'react'
+import firebase from '../firebase'
 import FaStar from '../components/Star/Stars'
 
-function Popup({ selected, closePopup }) {
+
+
+function Popup({ selected, data, closePopup}) {
+	const onSave = () => {
+		console.log(selected)
+		const db = firebase.firestore();
+		console.log(db)
+		db.collection('movies').add({...selected })
+
+	  }
 	return (
 		<section className='popup'>
 			<div className='content'>
@@ -16,7 +26,7 @@ function Popup({ selected, closePopup }) {
 					<p>Rate This Movie:<FaStar /></p>
 				</div>
 				{/* Add the route to DB to save button below in onClick  */}
-				<button className='save'>Save to Your Library</button>
+				<button className='save' onClick={onSave}>Save to Your Library</button>
 				<button className='close' onClick={closePopup}>Close</button>
 			</div>
 		</section>

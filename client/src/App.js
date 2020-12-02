@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import './App.css';
-import fire from './fire';
 import Home from '../src/components/Home/Home'
 import axios from 'axios';
-import firebase from 'firebase'
+import firebase from 'firebase';
+// import Firebase from './firebase'
+// import config from './firebase';
+import UserInput from './components/UserInput'
+// require('firebase/auth')
+
+
 
 
 const App = () => {
@@ -27,9 +32,10 @@ const App = () => {
 
   const handleLogin = () => {
     clearErrors();
-    fire
+    firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      
       .catch(err => {
         switch (err.code) {
           case 'auth/invalid-email':
@@ -46,7 +52,7 @@ const App = () => {
 
   const handleSignup = () => {
     clearErrors();
-    fire
+    firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .catch(err => {
@@ -59,13 +65,8 @@ const App = () => {
             setPasswordError(err.message);
             break;
         } 
-      }).then (
-        axios.post('api/user', { email:'', password:'' })
-           .then(res => {
-             console.log(res);
-             console.log(res.data);
-           })
-      )
+      })
+        
   };
   function writeUserData(userId, email, password) { 
     console.log(email, "Here") 
@@ -76,15 +77,15 @@ const App = () => {
         }
 
   const handleLogout = () => {
-    fire.auth().signOut();
+    firebase.auth().signOut();
   };
 
   const authListener = () => {
-    fire.auth().onAuthStateChanged(user => {
+  firebase.auth().onAuthStateChanged(user => {
       if (user) {
         clearInputs();
         setUser(user);
-      } else {
+     } else {
         setUser('');
       }
     });
@@ -93,6 +94,7 @@ const App = () => {
   useEffect(() => {
     authListener();
   }, []);
+
 
   return (
     <div className='App'>

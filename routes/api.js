@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
             console.log('error: ', daerrorta);
         });
 });
-router.post('/save', (req, res) => {
+router.post('/movie', (req, res) => {
     const data = req.body;
     const newMoviePost = new Movie(data);
     newMoviePost.save((error) => {
