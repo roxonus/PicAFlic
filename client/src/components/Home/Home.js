@@ -5,6 +5,7 @@ import Results from '../Results';
 import config from '../../firebase';
 import Popup from '../Popup';
 import firebase from 'firebase';
+import Library from '../Library/Library'
 
 // import Hero from '../../Hero'
 
@@ -39,6 +40,12 @@ function Home() {
 
         console.log(state.s);
     }
+
+    const handleLibrary = (e) => {
+        
+
+        
+    }
     
 
     const handleLogout = () => {
@@ -61,49 +68,17 @@ function Home() {
         });
       }
 
-    // async function addDocument(db) {
-    //     const res = await db.collection('movies').add({
-    //         Title: Popup.Title,
-    //         Year: Popup.Year,
-    //         Rated: Popup.Rated,
-    //         Poster: Popup.Poster,
-    //         Plot: Popup.Plot,
-    //         Director: Popup.Director,
-    //         Actors: Popup.Actors,
-    //         Runtime: Popup.Runtime
-    //     });
-    // }
-
-    
-    //   For saving the users choice to library
-    // const saveLibrary = () => {
-    //     setState(prevState => {
-    //       return { ...prevState, selected: {} }
-    //     });
-    //   }
-
-    
 
     return(
         
         <div className="mt-2">
         
            <section className='hero'>
-            <nav>
-                <h2>
-                    Welcome to PicAFlic
-                </h2>
-                <button onClick={'../Library/Library'}>
-                    Library
-                </button>
-                <button onClick={handleLogout}>
-                    Logout
-                </button>
-            </nav>
+            
                <Search handleInput={handleInput} search={search} />
                <Results results={state.results} openPopup={openPopup} />
-                {/* add in here a savelibrary={saveLibrary} */}
-               {(typeof state.selected.Title != 'undefined') ? <Popup selected={state.selected} closePopup={closePopup} /> : false}
+               {/* {(typeof state.selected.Title !== 'undefined') ? <Popup selected={state.selected} closePopup={closePopup} /> : false} */}
+               {(Object.keys(state.selected).length !== 0) ? <Popup selected={state.selected} closePopup={closePopup} /> : false}
                </section>
          
         </div>
