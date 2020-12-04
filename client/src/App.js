@@ -2,13 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import './App.css';
 import Home from '../src/components/Home/Home'
-import axios from 'axios';
-import firebase from 'firebase';
-// import Firebase from './firebase'
-// import config from './firebase';
-import UserInput from './components/UserInput'
-// require('firebase/auth')
-
+import firebase from './firebase';
+import Nav from "../src/components/Navbar/Nav"
+import 'materialize-css/dist/css/materialize.min.css';
 
 
 
@@ -36,6 +32,7 @@ const App = () => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       
+      
       .catch(err => {
         switch (err.code) {
           case 'auth/invalid-email':
@@ -46,15 +43,20 @@ const App = () => {
           case 'auth/wrong-password':
             setPasswordError(err.message);
             break;
-        }
+        } 
       })
   };
 
   const handleSignup = () => {
+    const db = firebase.firestore();
     clearErrors();
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(cred => {
+        return db.collection('user').ref(cred.user.uid)
+      }) 
+
       .catch(err => {
         switch (err.code) {
           case 'auth/email-already-in-use':
@@ -64,16 +66,19 @@ const App = () => {
           case 'auth/weak-password':
             setPasswordError(err.message);
             break;
-        } 
+        }
+
       })
         
   };
-  function writeUserData(userId, email, password) { 
-    console.log(email, "Here") 
-    firebase.database().ref('users/' + userId).set({
-          email: email,
-          password: password, 
-        });
+
+
+  function writeUserData({uid, email, password}) { 
+    setUser = () => {
+    const db = firebase.firestore();
+    db.collection('users').add({ uid, email, password })
+    console.log(db)
+    }
         }
 
   const handleLogout = () => {
@@ -98,11 +103,12 @@ const App = () => {
 
   return (
     <div className='App'>
+      <Nav />
       {user ? (
         <Home handleLogout={handleLogout} />
        
       ) : (
-        <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleLogin={handleLogin} handleSignup={handleSignup} hasAccount={hasAccount} setHasAccount={setHasAccount} emailError={emailError} passwordError={passwordError} />
+        <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleLogin={handleLogin} handleSignup={handleSignup} writeUserData={writeUserData} hasAccount={hasAccount} setHasAccount={setHasAccount} emailError={emailError} passwordError={passwordError} />
       )}
     </div>
   );

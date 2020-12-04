@@ -4,7 +4,7 @@ import FaStar from '../components/Star/Stars'
 
 
 
-function Popup({ selected, data, closePopup}) {
+function Popup({ selected, closePopup}) {
 	const onSave = () => {
 		console.log(selected)
 		const db = firebase.firestore();
@@ -13,23 +13,36 @@ function Popup({ selected, data, closePopup}) {
 
 	  }
 	return (
-		<section className='popup'>
-			<div className='content'>
-				<h2>{ selected.Title } <span>({ selected.Year })</span></h2>
-				<p className='rating'>Rating: {selected.Rated}</p>
-				<div className='plot'>
-					<img src={selected.Poster} />
-					<p>Plot:{selected.Plot}</p>
-					<p>Director:{selected.Director}</p>
-					<p>Actors: {selected.Actors}</p>
-					<p>Runtime:{selected.Runtime}</p>
-					<p>Rate This Movie:<FaStar /></p>
-				</div>
-				{/* Add the route to DB to save button below in onClick  */}
-				<button className='save' onClick={onSave}>Save to Your Library</button>
-				<button className='close' onClick={closePopup}>Close</button>
-			</div>
-		</section>
+		<section className="popup">
+      <div className="content">
+        <img src={selected.Poster} />
+      </div>
+      <div className="details">
+        <p>
+          {selected.Title} <span>({selected.Year})</span>
+        </p>
+        <p>Rated:{selected.Rated}</p>
+		<p>Runtime:{selected.Runtime}</p>
+        <p>Director:{selected.Director}</p>
+		<p>Actors: {selected.Actors}</p>
+        <p>Plot: {selected.Plot}</p>
+        <p>
+          Rate This Movie:
+          <FaStar />
+        </p>
+        <div className="comments">
+            <label type="text">Leave a comment:</label><br />
+            <textarea type="text" className="leaveComment"></textarea>
+        </div><br/>
+		<div className="button">
+        <button className="save"onClick={onSave}>Save to Your Library</button>
+        <button className="close" onClick={closePopup}>
+		{" "}
+          Close
+        </button>
+		</div>
+      </div>
+    </section>
 		
 	)
 	
