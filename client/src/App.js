@@ -77,7 +77,6 @@ const App = () => {
     setUser = () => {
     const db = firebase.firestore();
     db.collection('users').add({ uid, email, password })
-    console.log(db)
     }
         }
 

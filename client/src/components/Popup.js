@@ -9,9 +9,11 @@ function Popup({ selected, closePopup}) {
 		console.log(selected)
 		const db = firebase.firestore();
 		console.log(db)
-		db.collection('movies').add({...selected })
+    db.collection('movies').add({...selected })
+     
+    }
+    
 
-	  }
 	return (
 		<section className="popup">
       <div className="content">
