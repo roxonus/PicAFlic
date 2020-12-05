@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import fire from "../../firebase";
 import "./Nav.css";
 import * as ROUTES from "../../constants/routes";
+
 const handleLogout = () => {
   fire.auth().signOut();
 };

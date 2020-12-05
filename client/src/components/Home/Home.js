@@ -5,7 +5,7 @@ import Results from '../Results';
 import config from '../../firebase';
 import Popup from '../Popup';
 import firebase from 'firebase';
-import Library from '../Library/Library'
+
 
 // import Hero from '../../Hero'
 
@@ -40,13 +40,6 @@ function Home() {
 
         console.log(state.s);
     }
-
-    const handleLibrary = (e) => {
-        
-
-        
-    }
-    
 
     const handleLogout = () => {
         firebase.auth().signOut();

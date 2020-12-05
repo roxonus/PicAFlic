@@ -10,8 +10,7 @@ const firebase = require('firebase/app');
 
 require('firebase/auth');
 require('firebase/firestore');
-// const authRoute = require('./routes/auth');
-// const postRoute = require('./routes/post');
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -21,20 +20,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build/"));
 }
 
-const MONGODB_URI = 'mongodb+srv://bowerpowewr85:DeadLast@fitnesscluster.cohae.mongodb.net/picaflicDB?retryWrites=true&w=majority'
 
-mongoose.connect(MONGODB_URI || 'mongodb://localhost/picaflicDB', { useNewUrlParser: true, useUnifiedTopography: true }); 
-
-mongoose.connection.on('connected', () => {
-  console.log('Your shit is good to go. Now go shit.')
-});
-// (err) => {
-//   if(err) {
-//     console.error(err);
-//   } else {
-//     console.log('Connected, lets do the damn thing');
-//   }
-// });
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function(req, res) {
