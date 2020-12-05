@@ -8,7 +8,7 @@ const { email, setEmail, password, setPassword, handleLogin, handleSignup, hasAc
         <section className='login'>
             
             <div className='loginContainer'>
-            <h1 className='title' >PicAFlic</h1>
+            {/* <h1 className='title' >PicAFlic</h1> */}
                 <label>Email</label>
                 <input type='text' autoFocus required value={email} onChange={e => setEmail(e.target.value)} />
                 <p className='errorMsg'>{emailError}</p>
