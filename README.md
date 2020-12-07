@@ -60,8 +60,7 @@ We have future aspiration of where we want the application to go.
    3. Bring in another API that will allow them to be able to view trailers for the movies
    4. Add a function for them to be able to buy, rent or watch free movies
 These are just some of the future plans we have for this build. We will continue to update and add more functions to the application for a better user experience.
-## Questions
-If you have questions about this repository? Please contact me at [kamara.moses@yahoo.com](mailto:kamara.moses@yahoo.com). View more of my work in GitHub at [kamara-moses](https://github.com/kamara-moses).
+
 ## License
 This repository is licensed under the MIT license.
 Copyright (c) [2020] [Moses Kamara]
